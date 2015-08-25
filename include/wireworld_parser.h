@@ -15,8 +15,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
-#ifndef WIREWORLD_PARAMETERS
-#define WIREWORLD_PARAMETERS
+#ifndef WIREWORLD_PARSER
+#define WIREWORLD_PARSER
 
 #include "wireworld_types.h"
 #include "quicky_exception.h"
@@ -31,23 +31,23 @@ namespace wireworld_common
   {
   public:
     inline static void parse(const std::string & p_file_name,
-                             std::vector<wireworld_systemc::wireworld_types::t_coordinates > & p_copper_cells,
-                             std::vector<wireworld_systemc::wireworld_types::t_coordinates > & p_queue_cells,
-                             std::vector<wireworld_systemc::wireworld_types::t_coordinates > & p_electron_cells);
+                             std::vector<wireworld_common::wireworld_types::t_coordinates > & p_copper_cells,
+                             std::vector<wireworld_common::wireworld_types::t_coordinates > & p_queue_cells,
+                             std::vector<wireworld_common::wireworld_types::t_coordinates > & p_electron_cells);
                       
   private:
   };
 
   //----------------------------------------------------------------------------
   void wireworld_parser::parse(const std::string & p_file_name,
-                               std::vector<wireworld_systemc::wireworld_types::t_coordinates > & p_copper_cells,
-                               std::vector<wireworld_systemc::wireworld_types::t_coordinates > & p_queue_cells,
-                               std::vector<wireworld_systemc::wireworld_types::t_coordinates > & p_electron_cells)
+                               std::vector<wireworld_common::wireworld_types::t_coordinates > & p_copper_cells,
+                               std::vector<wireworld_common::wireworld_types::t_coordinates > & p_queue_cells,
+                               std::vector<wireworld_common::wireworld_types::t_coordinates > & p_electron_cells)
   {
     std::ifstream l_input_file(p_file_name.c_str());
     if(l_input_file==NULL)
       {
-        throw quicky_exception::quicky_runtime_exception("Unable to open file \"" + l_file_name + "\"");
+        throw quicky_exception::quicky_runtime_exception("Unable to open file \"" + p_file_name + "\"",__LINE__,__FILE__);
       }
     std::string l_line;
     uint32_t l_nb_line = 0;
@@ -83,5 +83,5 @@ namespace wireworld_common
     l_input_file.close();
   }
 }
-#endif // WIREWORLD_PARAMETERS
+#endif // WIREWORLD_PARSER
 //EOF
