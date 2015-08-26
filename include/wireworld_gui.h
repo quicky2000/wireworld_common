@@ -21,6 +21,7 @@
 #include "simple_gui.h"
 #include "wireworld_types.h"
 #include "quicky_exception.h"
+#include <sstream>
 
 namespace wireworld_common
 {
