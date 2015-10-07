@@ -37,7 +37,7 @@ namespace wireworld_common
     // Defining application command line parameters
     parameter_manager::parameter_manager l_param_manager("wireworld.exe","--",1);
     parameter_manager::parameter_if l_param_file("input_file");
-    parameter_manager::parameter_if l_param_nb_max_cycle("nb_max_cycle");
+    parameter_manager::parameter_if l_param_nb_max_cycle("nb_max_cycle",true);
     parameter_manager::parameter_if l_param_start_cycle("start_cycle",true);
     parameter_manager::parameter_if l_param_refresh_interval("refresh_interval",true);
     parameter_manager::parameter_if l_param_display_duration("display_duration",true);
