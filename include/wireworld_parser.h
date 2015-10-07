@@ -45,7 +45,7 @@ namespace wireworld_common
                                std::vector<wireworld_common::wireworld_types::t_coordinates > & p_electron_cells)
   {
     std::ifstream l_input_file(p_file_name.c_str());
-    if(l_input_file==NULL)
+    if(!l_input_file.is_open())
       {
         throw quicky_exception::quicky_runtime_exception("Unable to open file \"" + p_file_name + "\"",__LINE__,__FILE__);
       }
