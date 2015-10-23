@@ -38,7 +38,26 @@ namespace wireworld_common
     inline uint32_t get_refresh_interval(void)const;
     inline void set_display_duration(uint32_t p_display_duration);
     inline uint32_t get_display_duration(void)const;
+#ifdef COMPILE_TRACE_FEATURE
+    inline void set_trace(bool p_trace);
+    inline bool get_trace(void)const;
+    inline void set_trace_x_origin(const unsigned int & p_trace_x_origin);
+    inline unsigned int get_trace_x_origin(void)const;
+    inline void set_trace_y_origin(const unsigned int & p_trace_y_origin);
+    inline unsigned int get_trace_y_origin(void)const;
+    inline void set_trace_width(const unsigned int & p_trace_width);
+    inline unsigned int get_trace_width(void)const;
+    inline void set_trace_height(const unsigned int & p_trace_height);
+    inline unsigned int get_trace_height(void)const;
+#endif // COMPILE_TRACE_FEATURE
   private:
+#ifdef COMPILE_TRACE_FEATURE
+    bool m_trace;
+    unsigned int m_trace_x_origin;
+    unsigned int m_trace_y_origin;
+    unsigned int m_trace_width;
+    unsigned int m_trace_height;
+#endif // COMPILE_TRACE_FEATURE
     std::string m_input_file_name;
     uint32_t m_nb_max_cycle;
     uint32_t m_start_cycle;
@@ -48,13 +67,20 @@ namespace wireworld_common
 
   //------------------------------------------------------------------------------
   wireworld_configuration::wireworld_configuration(void):
+ #ifdef COMPILE_TRACE_FEATURE
+    m_trace(false),
+    m_trace_x_origin(0),
+    m_trace_y_origin(0),
+    m_trace_width(0),
+    m_trace_height(0),
+#endif // COMPILE_TRACE_FEATURE
     m_input_file_name("wireworld.txt"),
     m_nb_max_cycle(1000),
     m_start_cycle(0),
     m_refresh_interval(1),
     m_display_duration(500)
-      {
-      }
+    {
+    }
 
     //------------------------------------------------------------------------------
     void wireworld_configuration::set_input_file_name(const std::string & p_name)
@@ -115,6 +141,68 @@ namespace wireworld_common
     {
       return m_display_duration;
     }
+#ifdef COMPILE_TRACE_FEATURE
+    //------------------------------------------------------------------------------
+    void wireworld_configuration::set_trace(bool p_trace)
+    {
+      m_trace = p_trace;
+    }
+
+    //------------------------------------------------------------------------------
+    bool wireworld_configuration::get_trace(void)const
+    {
+      return m_trace;
+    }
+
+    //------------------------------------------------------------------------------
+    void wireworld_configuration::set_trace_x_origin(const unsigned int & p_trace_x_origin)
+    {
+      m_trace_x_origin = p_trace_x_origin;
+    }
+
+    //------------------------------------------------------------------------------
+    unsigned int wireworld_configuration::get_trace_x_origin(void)const
+    {
+      return m_trace_x_origin;
+    }
+
+    //------------------------------------------------------------------------------
+    void wireworld_configuration::set_trace_y_origin(const unsigned int & p_trace_y_origin)
+    {
+      m_trace_y_origin = p_trace_y_origin;
+    }
+
+    //------------------------------------------------------------------------------
+    unsigned int wireworld_configuration::get_trace_y_origin(void)const
+    {
+      return m_trace_y_origin;
+    }
+
+    //------------------------------------------------------------------------------
+    void wireworld_configuration::set_trace_width(const unsigned int & p_trace_width)
+    {
+      m_trace_width = p_trace_width;
+    }
+
+    //------------------------------------------------------------------------------
+    unsigned int wireworld_configuration::get_trace_width(void)const
+    {
+      return m_trace_width;
+    }
+
+    //------------------------------------------------------------------------------
+    void wireworld_configuration::set_trace_height(const unsigned int & p_trace_height)
+    {
+      m_trace_height = p_trace_height;
+    }
+
+    //------------------------------------------------------------------------------
+    unsigned int wireworld_configuration::get_trace_height(void)const
+    {
+      return m_trace_height;
+    }
+#endif // COMPILE_TRACE_FEATURE
+
 }
 #endif /* _WIREWORLD_CONFIGURATION_H_ */
 //EOF
