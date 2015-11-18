@@ -31,18 +31,18 @@ namespace wireworld_common
   {
   public:
     inline static void parse(const std::string & p_file_name,
-                             std::vector<wireworld_common::wireworld_types::t_coordinates > & p_copper_cells,
-                             std::vector<wireworld_common::wireworld_types::t_coordinates > & p_queue_cells,
-                             std::vector<wireworld_common::wireworld_types::t_coordinates > & p_electron_cells);
+                             std::vector<wireworld_types::t_coordinates > & p_copper_cells,
+                             std::vector<wireworld_types::t_coordinates > & p_queue_cells,
+                             std::vector<wireworld_types::t_coordinates > & p_electron_cells);
                       
   private:
   };
 
   //----------------------------------------------------------------------------
   void wireworld_parser::parse(const std::string & p_file_name,
-                               std::vector<wireworld_common::wireworld_types::t_coordinates > & p_copper_cells,
-                               std::vector<wireworld_common::wireworld_types::t_coordinates > & p_queue_cells,
-                               std::vector<wireworld_common::wireworld_types::t_coordinates > & p_electron_cells)
+                               std::vector<wireworld_types::t_coordinates > & p_copper_cells,
+                               std::vector<wireworld_types::t_coordinates > & p_queue_cells,
+                               std::vector<wireworld_types::t_coordinates > & p_electron_cells)
   {
     std::ifstream l_input_file(p_file_name.c_str());
     if(!l_input_file.is_open())
