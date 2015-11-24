@@ -22,6 +22,8 @@
 #include <cinttypes>
 #include <string>
 #include <cassert>
+#include <map>
+#include <vector>
 
 namespace wireworld_common
 {
@@ -31,7 +33,8 @@ namespace wireworld_common
     typedef std::pair<uint32_t,uint32_t> t_coordinates;
     typedef enum class cell_state_t {COPPER=0,QUEUE,ELECTRON} t_cell_state;
     inline static const std::string & cell_state2string(const t_cell_state & p_state);
-
+    typedef std::vector<t_coordinates> t_cell_list;
+    typedef std::map<t_coordinates,t_cell_list> t_neighbours;
   private:
     static std::string m_state2string[3];
   };
