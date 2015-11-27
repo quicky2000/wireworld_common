@@ -19,6 +19,8 @@
 #define WIREWORLD_ANALYZER
 
 #include "wireworld_types.h"
+#include "wireworld_generic_configuration.h"
+#include <sstream>
 #include <vector>
 #include <cinttypes>
 #include <map>
@@ -31,8 +33,10 @@ namespace wireworld_common
   {
   public:
     inline static void analyze(const wireworld_types::t_cell_list & p_raw_copper_cells,
-			       const wireworld_types::t_cell_list & p_queue_cells,
-			       const wireworld_types::t_cell_list & p_electron_cells,
+			       wireworld_types::t_cell_list & p_queue_cells,
+			       wireworld_types::t_cell_list & p_electron_cells,
+			       const wireworld_generic_configuration & p_generic_config,
+			       const wireworld_types::t_config_items & p_config_list,
 			       uint32_t & p_x_max,
 			       uint32_t & p_y_max,
 			       wireworld_types::t_cell_list & p_copper_cells,
@@ -49,8 +53,10 @@ namespace wireworld_common
 
   //----------------------------------------------------------------------------
   void wireworld_analyzer::analyze(const wireworld_types::t_cell_list & p_raw_copper_cells,
-				   const wireworld_types::t_cell_list & p_queue_cells,
-				   const wireworld_types::t_cell_list & p_electron_cells,
+				   wireworld_types::t_cell_list & p_queue_cells,
+				   wireworld_types::t_cell_list & p_electron_cells,
+				   const wireworld_generic_configuration & p_generic_config,
+				   const wireworld_types::t_config_items & p_config_list,
 				   uint32_t & p_x_max,
 				   uint32_t & p_y_max,
 				   wireworld_types::t_cell_list & p_copper_cells,
@@ -66,6 +72,59 @@ namespace wireworld_common
 	if(l_iter.first > p_x_max) p_x_max = l_iter.first;
 	if(l_iter.second > p_y_max) p_y_max = l_iter.second;
       }
+
+    // Check if configurable cells corresponds to copper cells
+    const wireworld_types::t_item_list & l_generic_list = p_generic_config.get_configurable_cells();
+    for(auto l_iter : l_generic_list)
+    {
+      if(l_iter.is_head_defined())
+      {
+	const wireworld_generic_item::t_generic_coordinates & l_gen_coord = l_iter.get_head_coord();
+	const wireworld_types::t_coordinates l_coord((unsigned int)(l_gen_coord.first),(unsigned int)(l_gen_coord.second));
+	if(l_cells.end() == l_cells.find(l_coord))
+	  {
+	    std::stringstream l_stream;
+	    l_stream << l_iter;
+	    throw quicky_exception::quicky_logic_exception("Generic item head "+l_stream.str()+" does not correspond to a copper cell",__LINE__,__FILE__);
+	  }
+      }
+      if(l_iter.is_queue_defined())
+      {
+	const wireworld_generic_item::t_generic_coordinates & l_gen_coord = l_iter.get_queue_coord();
+	const wireworld_types::t_coordinates l_coord((unsigned int)(l_gen_coord.first),(unsigned int)(l_gen_coord.second));
+	if(l_cells.end() == l_cells.find(l_coord))
+	  {
+	    std::stringstream l_stream;
+	    l_stream << l_iter;
+	    throw quicky_exception::quicky_logic_exception("Generic item queue "+l_stream.str()+" does not correspond to a copper cell",__LINE__,__FILE__);
+	  }
+      }
+      if(p_config_list.end() == p_config_list.find(l_iter.get_name()))
+	{
+	  std::cout << "WARNING : generic item \"" << l_iter.get_name() << "\" has not been configured" << std::endl ;
+	}
+    }
+
+    // Apply config
+    for(auto l_iter : p_config_list)
+    {
+      const wireworld_generic_item & l_generic_item = p_generic_config.get(l_iter.first);
+      if(l_iter.second)
+	{
+	  if(l_generic_item.is_head_defined())
+	    {
+	      const wireworld_generic_item::t_generic_coordinates & l_gen_coord = l_generic_item.get_head_coord();
+	      const wireworld_types::t_coordinates l_coord((unsigned int)(l_gen_coord.first),(unsigned int)(l_gen_coord.second));
+	      p_electron_cells.push_back(l_coord);
+	    }
+	  if(l_generic_item.is_queue_defined())
+	    {
+	      const wireworld_generic_item::t_generic_coordinates & l_gen_coord = l_generic_item.get_queue_coord();
+	      const wireworld_types::t_coordinates l_coord((unsigned int)(l_gen_coord.first),(unsigned int)(l_gen_coord.second));
+	      p_queue_cells.push_back(l_coord);
+	    }
+	}
+    }
 
     // Cout number of neighbours
     for(auto l_iter:l_cells)

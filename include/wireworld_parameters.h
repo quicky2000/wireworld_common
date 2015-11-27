@@ -41,6 +41,8 @@ namespace wireworld_common
     parameter_manager::parameter_if l_param_start_cycle("start_cycle",true);
     parameter_manager::parameter_if l_param_refresh_interval("refresh_interval",true);
     parameter_manager::parameter_if l_param_display_duration("display_duration",true);
+    parameter_manager::parameter_if l_param_generic_file("generic_file",true);
+    parameter_manager::parameter_if l_param_config_file("config_file",true);
 #ifdef COMPILE_TRACE_FEATURE
     parameter_manager::parameter_if l_param_trace("trace",true);
     parameter_manager::parameter_if l_param_trace_x_origin("trace_x_origin",true);
@@ -54,6 +56,8 @@ namespace wireworld_common
     l_param_manager.add(l_param_trace_height);
 #endif // COMPILE_TRACE_FEATURE
     l_param_manager.add(l_param_file);
+    l_param_manager.add(l_param_generic_file);
+    l_param_manager.add(l_param_config_file);
     l_param_manager.add(l_param_start_cycle);
     l_param_manager.add(l_param_nb_max_cycle);
     l_param_manager.add(l_param_refresh_interval);
@@ -66,6 +70,16 @@ namespace wireworld_common
     if(l_param_file.value_set())
       {
 	p_config.set_input_file_name(l_param_file.get_value<std::string>());
+      }
+
+    if(l_param_generic_file.value_set())
+      {
+	p_config.set_generic_file_name(l_param_generic_file.get_value<std::string>());
+      }
+
+    if(l_param_config_file.value_set())
+      {
+	p_config.set_config_file_name(l_param_config_file.get_value<std::string>());
       }
 
     if(l_param_nb_max_cycle.value_set())

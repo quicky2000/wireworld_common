@@ -19,6 +19,7 @@
 #ifndef WIREWORLD_TYPES_H
 #define WIREWORLD_TYPES_H
 
+#include "wireworld_generic_item.h"
 #include <cinttypes>
 #include <string>
 #include <cassert>
@@ -35,6 +36,8 @@ namespace wireworld_common
     inline static const std::string & cell_state2string(const t_cell_state & p_state);
     typedef std::vector<t_coordinates> t_cell_list;
     typedef std::map<t_coordinates,t_cell_list> t_neighbours;
+    typedef std::vector<wireworld_generic_item> t_item_list;
+    typedef std::map<std::string,bool> t_config_items;
   private:
     static std::string m_state2string[3];
   };

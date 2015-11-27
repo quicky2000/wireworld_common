@@ -38,6 +38,10 @@ namespace wireworld_common
     inline uint32_t get_refresh_interval(void)const;
     inline void set_display_duration(uint32_t p_display_duration);
     inline uint32_t get_display_duration(void)const;
+    inline void set_generic_file_name(const std::string & p_name);
+    inline const std::string & get_generic_file_name(void)const;
+    inline void set_config_file_name(const std::string & p_name);
+    inline const std::string & get_config_file_name(void)const;
 #ifdef COMPILE_TRACE_FEATURE
     inline void set_trace(bool p_trace);
     inline bool get_trace(void)const;
@@ -59,6 +63,8 @@ namespace wireworld_common
     unsigned int m_trace_height;
 #endif // COMPILE_TRACE_FEATURE
     std::string m_input_file_name;
+    std::string m_generic_file_name;
+    std::string m_config_file_name;
     uint32_t m_nb_max_cycle;
     uint32_t m_start_cycle;
     uint32_t m_refresh_interval;
@@ -75,6 +81,8 @@ namespace wireworld_common
     m_trace_height(0),
 #endif // COMPILE_TRACE_FEATURE
     m_input_file_name("wireworld.txt"),
+    m_generic_file_name(""),
+    m_config_file_name(""),
     m_nb_max_cycle(1000),
     m_start_cycle(0),
     m_refresh_interval(1),
@@ -92,6 +100,30 @@ namespace wireworld_common
     const std::string & wireworld_configuration::get_input_file_name(void)const
       {
 	return m_input_file_name;
+      }
+
+    //------------------------------------------------------------------------------
+    void wireworld_configuration::set_generic_file_name(const std::string & p_name)
+    {
+      m_generic_file_name = p_name;
+    }
+
+    //------------------------------------------------------------------------------
+    const std::string & wireworld_configuration::get_generic_file_name(void)const
+      {
+	return m_generic_file_name;
+      }
+
+    //------------------------------------------------------------------------------
+    void wireworld_configuration::set_config_file_name(const std::string & p_name)
+    {
+      m_config_file_name = p_name;
+    }
+
+    //------------------------------------------------------------------------------
+    const std::string & wireworld_configuration::get_config_file_name(void)const
+      {
+	return m_config_file_name;
       }
 
     //------------------------------------------------------------------------------
