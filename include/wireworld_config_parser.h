@@ -83,6 +83,19 @@ namespace wireworld_common
 	    // Ignore comments
 	    if('#' != l_line[0])
 	      {
+                // Remove comments at the end of line
+                l_pos = l_line.find('#');
+                if(std::string::npos != l_pos)
+                  {
+                    l_line = l_line.substr(0,l_pos);
+                  }
+                // Remove blank characters at the end of line
+                l_pos = l_line.find_last_not_of(" \t");
+                if(std::string::npos != l_pos && l_pos + 1 < l_line.size())
+                  {
+                    l_line = l_line.substr(0,l_pos + 1);
+                  }
+
 		l_pos = l_line.find(':');
 		if(std::string::npos != l_pos)
 		  {
