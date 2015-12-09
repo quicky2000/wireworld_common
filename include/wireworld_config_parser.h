@@ -122,7 +122,11 @@ namespace wireworld_common
 		      {
 			parse_error(l_nb_line,l_line,"Item value should be 0 or 1 instead of "+l_item_value_str,__LINE__,__FILE__);
 		      }
-		    p_config_items.insert(wireworld_types::t_config_items::value_type(l_item_name,l_item_value));
+		    bool l_existing = p_config_items.insert(wireworld_types::t_config_items::value_type(l_item_name,l_item_value)).second;
+                    if(!l_existing)
+                    {
+                       parse_error(l_nb_line,l_line,"Item name \""+l_item_name+"\" has already been defined",__LINE__,__FILE__);
+                    }
 		  }
 		else
 		  {
