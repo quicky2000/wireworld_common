@@ -94,7 +94,12 @@ namespace wireworld_common
 
     if(l_param_refresh_interval.value_set())
       {
-	p_config.set_refresh_interval(l_param_refresh_interval.get_value<uint32_t>());
+	unsigned int l_refresh_interval = l_param_refresh_interval.get_value<uint32_t>();
+	if(!l_refresh_interval)
+	  {
+	    throw quicky_exception::quicky_logic_exception("Refresh interval must not be null",__LINE__,__FILE__);
+	  }
+	p_config.set_refresh_interval(l_refresh_interval);
       }
 
     if(l_param_display_duration.value_set())
@@ -104,6 +109,11 @@ namespace wireworld_common
 #ifdef COMPILE_TRACE_FEATURE
     if(l_param_trace.value_set())
       {
+	std::string l_trace_str = l_param_trace.get_value<std::string>();
+	if("1" != l_trace_str && "0" != l_trace_str)
+	  {
+	    throw quicky_exception::quicky_logic_exception("Trace parameter value should be 0 or 1 not "+l_trace_str,__LINE__,__FILE__);
+	  }
 	p_config.set_trace(l_param_trace.get_value<uint32_t>());
       }
     if(l_param_trace_x_origin.value_set())
